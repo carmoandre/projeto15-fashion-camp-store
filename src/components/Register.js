@@ -1,61 +1,64 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
-import UserContext from "../contexts/UserContext";
+import { Logo } from "./reusable/Logo";
 import { GenericInput } from "./reusable/GenericInput";
 import { GenericButton } from "./reusable/GenericButton";
-import { Logo } from "./reusable/Logo";
 
-export default function Login() {
+export default function Register() {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
-    const { setUser } = useContext(UserContext);
     const history = useHistory();
 
     const loadEffect = (
         <Loader type="ThreeDots" color="#fff" height={45} width={80} />
     );
 
-    const localStorageUser = localStorage.getItem("user");
-
-    useEffect(() => {
-        if (localStorageUser) {
-            setUser(JSON.parse(localStorageUser));
-            //history.push("/");
-        }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    function logUser(event) {
+    function registerUser(event) {
         event.preventDefault();
 
         setDisabled(true);
 
-        const body = { email, password };
+        if (password !== confirmPassword) {
+            alert(
+                "A senha e sua confirmação estão diferentes. Elas devem coincidir"
+            );
+            setDisabled(false);
+            return;
+        }
+
+        const body = { name, email, password };
 
         const request = axios.post(
-            "http://localhost:4000/fashioncamp/sign-in",
+            "http://localhost:4000/fashioncamp/sign-up",
             body
         );
         request.then((response) => {
-            setUser(response.data);
-            const stringUser = JSON.stringify(response.data);
-            localStorage.setItem("user", stringUser);
             setDisabled(false);
-            history.push("/");
+            history.push("/sign-in");
         });
         request.catch((error) => {
-            alert("Usuário ou senha inválidos");
+            alert("Não foi possível realizar o cadastro.");
             setDisabled(false);
         });
     }
-
     return (
         <FlexEffect>
             <Logo>Fashion Camp</Logo>
-            <Form onSubmit={logUser}>
+            <Form onSubmit={registerUser}>
+                <GenericInput
+                    type="name"
+                    placeholder="Nome"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={disabled}
+                />
                 <GenericInput
                     type="email"
                     placeholder="E-mail"
@@ -72,12 +75,20 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={disabled}
                 />
+                <GenericInput
+                    type="password"
+                    placeholder="Confirme a senha"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    disabled={disabled}
+                />
                 <GenericButton type="submit" disabled={disabled}>
-                    {disabled ? loadEffect : `Entrar`}
+                    {disabled ? loadEffect : `Cadastrar`}
                 </GenericButton>
             </Form>
-            <Link to="/sign-up">
-                <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
+            <Link to="/sign-in">
+                <Suggestion>Já tem uma conta? Entre agora!</Suggestion>
             </Link>
         </FlexEffect>
     );

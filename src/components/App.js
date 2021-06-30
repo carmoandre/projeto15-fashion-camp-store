@@ -4,6 +4,7 @@ import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import Login from "./Login";
 import Home from "./Home/Home";
+import Register from "./Register";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -15,6 +16,9 @@ export default function App() {
                 <GlobalStyle />
                 <Switch>
                     <Route path="/sign-in" exact component={Login} />
+                </Switch>
+                <Switch>
+                    <Route path="/sign-up" exact component={Register} />
                 </Switch>
                 <Switch>
                     <Route path="/" exact component={Home} />
@@ -87,5 +91,23 @@ const ResetCSS = createGlobalStyle`
 const GlobalStyle = createGlobalStyle`
     body {
         background: #0A1931;
+<<<<<<< HEAD
+=======
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    input {
+        font-family: 'Open Sans', sans-serif;
+>>>>>>> main
     }
 `;
+
+//colors:
+//#0A1931
+//#185ADB
+//#FFC947
+//#EFEFEF
+
+//fonts:
+//font-family: 'Open Sans', sans-serif;
+//font-family: 'Permanent Marker', cursive;
