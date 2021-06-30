@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import Login from "./Login";
-import Home from "./Home";
+import Home from "./Home/Home";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -14,10 +14,10 @@ export default function App() {
                 <ResetCSS />
                 <GlobalStyle />
                 <Switch>
-                    <Route path="/" exact component={Login} />
+                    <Route path="/sign-in" exact component={Login} />
                 </Switch>
                 <Switch>
-                    <Route path="/home" exact component={Home} />
+                    <Route path="/" exact component={Home} />
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
@@ -85,5 +85,7 @@ const ResetCSS = createGlobalStyle`
 `;
 
 const GlobalStyle = createGlobalStyle`
-    
+    body {
+        background: #0A1931;
+    }
 `;
