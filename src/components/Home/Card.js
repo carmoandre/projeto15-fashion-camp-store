@@ -6,16 +6,18 @@ import { useHistory } from "react-router";
 import axios from "axios";
 
 
-export default function Card({card}){
-    const user = useContext(UserContext);
+export default function Card({card, setCartEmpty, setCartSize, cartSize}){
+    const {user} = useContext(UserContext);
     const history = useHistory();
     
     function addToCart(){
         if(!user){
             return history.push("/sign-in");
         }
-        const promisse = axios.post(`http://localhost:4000/product/add/${card.id}`);
+        const config = {headers: {"Authorization": `Bearer ${user.token}` } };
+        const promisse = axios.post(`http://localhost:4000/product/add/${card.id}`,{},config,);
         promisse.then((answer)=>{
+            setCartEmpty(false);
             console.log(answer);
         }).catch((answer)=>{
             console.log(answer.response);
@@ -43,19 +45,21 @@ export default function Card({card}){
 const CardStyle = styled.div`
     width: 20%;
     padding:10px;
-    border-radius: 5px 5px 5px 5px;
+    max-height:420px;
+    border-radius: 8px 8px 6px 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     .img-container{
+        border-radius: 8px 8px 0px 0px;
         height: 380px;
         background: #EFEFEF;
         padding:0px 0px;
         width:100%;
         height:100%;
         img{
-            border-radius: 5px 5px 0px 0px;
+            border-radius: 8px 8px 0px 0px;
             width:100%;
             height:100%;
 
@@ -96,6 +100,7 @@ const CardStyle = styled.div`
                 align-self: center;
                 display: flex;
                 align-items:flex-end;
+                cursor: pointer;
             }
             .price{
                 align-self: center;
@@ -105,13 +110,14 @@ const CardStyle = styled.div`
                 border-radius: 3px;
                 color:#0A1931;
                 max-height: 25px;
+                cursor: default;
             }
 
         }
 
     }
 
-    @media(max-width:1320px){        
+    @media(max-width:1320px){  
         .info{
             .others{
                 padding:0px 2px;
@@ -135,6 +141,7 @@ const CardStyle = styled.div`
         }
     }
     @media(max-width:1180px){
+        max-height: 400px;
         width:25%;
         .info{
             .others{
@@ -186,6 +193,7 @@ const CardStyle = styled.div`
         }
     }
     @media(max-width:490px){
+        max-height: 300px;
         .info{
             .others{
                 .add{
@@ -194,7 +202,7 @@ const CardStyle = styled.div`
             }
         }
     }
-    @media(max-width:450px){
+    @media(max-width:455px){
         .info{
             .name{
                 font-size: 14px;
@@ -203,7 +211,7 @@ const CardStyle = styled.div`
                 padding:0px 1px 1px 1px;
                 .add{
                     width:44px;
-                    font-size: 13px;
+                    font-size: 12px;
                     display: inline;
                 }
             }

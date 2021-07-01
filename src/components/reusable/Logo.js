@@ -6,6 +6,10 @@ const Logo = styled.p`
     line-height: 50px;
     color: #ffc947;
     margin-bottom: 24px;
+    cursor:default;
+    &:hover{
+        font-size: 33px;
+    }
 `;
 
 export { Logo };

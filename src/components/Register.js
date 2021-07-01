@@ -118,4 +118,7 @@ const Suggestion = styled.p`
     font-size: 15px;
     line-height: 18px;
     margin-top: 36px;
+    &:hover{
+        font-size: 16px;
+    }
 `;

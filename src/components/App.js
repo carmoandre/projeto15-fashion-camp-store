@@ -91,14 +91,11 @@ const ResetCSS = createGlobalStyle`
 const GlobalStyle = createGlobalStyle`
     body {
         background: #0A1931;
-<<<<<<< HEAD
-=======
         font-family: 'Open Sans', sans-serif;
     }
 
     input {
         font-family: 'Open Sans', sans-serif;
->>>>>>> main
     }
 `;
 
