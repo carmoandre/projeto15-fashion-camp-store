@@ -59,6 +59,7 @@ const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
     overflow: scroll;
+    justify-content: center;
     row-gap: 50px;
     width: 90%;
     height: 100%;

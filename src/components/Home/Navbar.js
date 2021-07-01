@@ -17,6 +17,7 @@ export default function Navbar({cartEmpty, setData}){
     const history = useHistory();
 
     function logout(){
+
         setUser(null);
         // apagar localStorage
         history.push("/sign-in");
@@ -46,7 +47,7 @@ export default function Navbar({cartEmpty, setData}){
 
     function search(e){
         e.preventDefault();
-        const promisse = axios.get(`http://localhost:4000/products?search=${searching}`);
+        const promisse = filtering ? axios.get(`http://localhost:4000/products?search=${searching}&category=${filtering}`) : axios.get(`http://localhost:4000/products?search=${searching}`);
         promisse.then((answer) => {
             setSearching(false);
             console.log(answer.data);
@@ -91,11 +92,7 @@ export default function Navbar({cartEmpty, setData}){
         </NavbarBottom>
         <Filter filtering={filtering}>
             {categories.map((category, i)=>
-                <>
-                <FilterOpt key={i} category={category.category} setFiltering={setFiltering} setData={setData}/>
-                <div>Moletom</div>
-                <div>Calça</div>
-                </>
+                <FilterOpt key={i} category={category} setFiltering={setFiltering} setData={setData} getAllProducts={getAllProducts}/>
             )}
         </Filter>
         </>
@@ -106,26 +103,16 @@ const Filter = styled.div`
     display: ${props => props.filtering ? "flex" : "none" };
     row-gap: 2px;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
     width: 200px;
     height:35px;
     overflow: scroll;
     border-radius: 14px;
-    padding-top: 30px;
+    padding-top: 5px;
     padding-bottom: 5px;
     background: #efefef;
-    &>div{
-        background: #0A1931;
-        border-radius: 5px;
-        border:3px solid #0A1931;
-        color:#FFC947;
-        cursor:pointer;
-    }
-    &>div:nth-child(1){
-        margin-top:20px;
-    }
     &::-webkit-scrollbar{
         display: none;
     }

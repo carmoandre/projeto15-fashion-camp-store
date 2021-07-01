@@ -43,9 +43,7 @@ export default function Card({card, setCartEmpty, setCartSize, cartSize}){
 }
 
 const CardStyle = styled.div`
-    width: 20%;
     padding:10px;
-    max-height:420px;
     border-radius: 8px 8px 6px 6px;
     display: flex;
     flex-direction: column;
@@ -53,23 +51,22 @@ const CardStyle = styled.div`
     align-items: center;
     .img-container{
         border-radius: 8px 8px 0px 0px;
-        height: 380px;
+        width: 250px;
+        height: 300px;
+        overflow: hidden;
         background: #EFEFEF;
         padding:0px 0px;
-        width:100%;
-        height:100%;
         img{
             border-radius: 8px 8px 0px 0px;
             width:100%;
-            height:100%;
-
+            height: 100%;
         }
     }
     .info{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        width:100%;
+        width:250px;
         min-height:85px;
         border-radius: 0px 0px 5px 5px;
         background: #EFEFEF;
@@ -92,7 +89,7 @@ const CardStyle = styled.div`
             justify-content: space-between;
             align-items: center;
             .add{
-                font-size: 20px;
+                font-size: 19px;
                 background: #0A1931;
                 border: 2px solid #0A1931;
                 border-radius: 3px;
@@ -104,7 +101,7 @@ const CardStyle = styled.div`
             }
             .price{
                 align-self: center;
-                font-size: 20px;
+                font-size: 16px;
                 background: #FFC947;
                 border: 2px solid #FFC947;
                 border-radius: 3px;
@@ -116,105 +113,39 @@ const CardStyle = styled.div`
         }
 
     }
-
-    @media(max-width:1320px){  
+    @media(max-width:900px){
+        .img-container{
+            width:220px;
+            height:250px;
+        }
         .info{
+            width:220px;
+        }
+    }
+    @media(max-width:535px){
+        .img-container{
+            width:200px;
+            height:230px;
+        }
+        .info{
+            width:200px;
             .others{
-                padding:0px 2px;
                 .add{
-                    font-size: 18px;
+                    font-size: 16px;
                 }
                 .price{
-                    font-size: 18px;
+                    font-size: 14px;
                 }
             }
         }
     }
-    @media(max-width:1250px){
-        .info{
-            .others{
-                padding:0px 2px;
-                .add{
-                    font-size: 16px;
-                }
-            }
+    @media(max-width:535px){
+        .img-container{
+            width:180px;
+            height:200px;
         }
-    }
-    @media(max-width:1180px){
-        max-height: 400px;
-        width:25%;
         .info{
-            .others{
-                .add{
-                    font-size: 18px;
-                }
-            }
-        }
-    }
-    @media(max-width:990px){
-        .info{
-            .others{
-                padding:0px 2px;
-                .add{
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-    @media(max-width:930px){
-        width:33%;
-        .info{
-            .others{
-                padding:0px 1px;
-                .add{
-                    font-size: 18px;
-                }
-            }
-        }
-    }
-    @media(max-width:750px){
-        width:33%;
-        .info{
-            .others{
-                .add{
-                    font-size: 15px;
-                }
-            }
-        }
-    }
-    @media(max-width:667px){
-        width:50%;
-        .info{
-            .others{
-                .add{
-                    font-size: 18px;
-                }
-            }
-        }
-    }
-    @media(max-width:490px){
-        max-height: 300px;
-        .info{
-            .others{
-                .add{
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-    @media(max-width:455px){
-        .info{
-            .name{
-                font-size: 14px;
-            }
-            .others{
-                padding:0px 1px 1px 1px;
-                .add{
-                    width:44px;
-                    font-size: 12px;
-                    display: inline;
-                }
-            }
+            width:180px;
         }
     }
 `
