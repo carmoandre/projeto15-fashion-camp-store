@@ -84,7 +84,7 @@ export default function Login() {
             </FlexEffect>
             <CartModal />{" "}
             {/*CartModal deve estar na pagina principal o state 
-            e a função toglleModal também, e devem ser passadas por props pra cartModal */}
+            e a função toggleModal também, e devem ser passadas por props pra cartModal */}
         </>
     );
 }

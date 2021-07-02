@@ -8,6 +8,7 @@ import {
     StyledModal,
     ModalTitle,
     ProductsHolder,
+    EmptyCartMesage,
     ButtonsHolder,
     Total,
     GoBackButton,
@@ -28,6 +29,7 @@ export default function CartModal() {
             id: 1,
             name: "Camisa branca",
             value: 5999,
+            stock: 3,
             quantity: 2,
             image: "https://a-static.mlcdn.com.br/1500x1500/camiseta-branca-lisa-100-algodao-torres-confeccoes/torresconfeccoes/51-195/5c4ae4b9c47d84d3af9d9f67dea33f60.jpg",
         },
@@ -35,6 +37,7 @@ export default function CartModal() {
             id: 2,
             name: "Camisa preta",
             value: 3289,
+            stock: 3,
             quantity: 1,
             image: "https://cdn.awsli.com.br/600x450/44/44273/produto/29988397/20d63df911.jpg",
         },
@@ -42,6 +45,7 @@ export default function CartModal() {
             id: 3,
             name: "Camisa verde",
             value: 9975,
+            stock: 4,
             quantity: 4,
             image: "https://img.elo7.com.br/product/zoom/2414FC6/camiseta-lisa-100-algodao-30-1-verde-verde.jpg",
         },
@@ -49,6 +53,7 @@ export default function CartModal() {
             id: 4,
             name: "Camisa rosa",
             value: 6999,
+            stock: 3,
             quantity: 2,
             image: "https://img.elo7.com.br/product/zoom/20FCECB/camiseta-confeccionada-100-algodao-rosa-pink-presente.jpg",
         },
@@ -81,15 +86,14 @@ export default function CartModal() {
         );
 
         request.then((response) => {
+            console.log(response.data);
             //setCartId
             //setCartProducts
         });
 
         request.catch((error) => {
             toggleModal();
-            alert(
-                "Não foi possível excluir o post. Tente novamente mais tarde."
-            );
+            alert("Não foi possível recuperar o carrinho.");
         });
     }
 
@@ -112,15 +116,13 @@ export default function CartModal() {
 
         request.then((response) => {
             setDisabled(false);
-            //acho que precisa de uma notificação e depois chamar o toggle
+            //acho que precisa de uma notificação antes de chamar o toggle
             //toggleModal();
         });
 
         request.catch((error) => {
             setDisabled(false);
-            alert(
-                "Não foi possível excluir o post. Tente novamente mais tarde."
-            );
+            alert("Não foi possível finalziar a compra.");
         });
     }
 
@@ -134,19 +136,29 @@ export default function CartModal() {
                 >
                     <ModalTitle>Seu carrinho</ModalTitle>
                     <ProductsHolder>
-                        {cartProducts.length
-                            ? cartProducts.map((product) => {
-                                  //soma pra fazer o total ????
-                                  //total += product.value*product.quantity
-                                  return (
-                                      <SingleCartProduct
-                                          key={product.id}
-                                          product={product}
-                                          cartId={cartId}
-                                      />
-                                  );
-                              })
-                            : `Você ainda não adicionou produtos ao carrinho!`}
+                        {cartProducts.length ? (
+                            cartProducts.map((product) => {
+                                total += product.value * product.quantity;
+                                return (
+                                    <SingleCartProduct
+                                        key={product.id}
+                                        product={product}
+                                        cartId={cartId}
+                                        hasStock={
+                                            product.quantity >= product.stock
+                                        }
+                                        getCart={getCart}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <EmptyCartMesage>
+                                <p>
+                                    Você ainoda não adicionou produtos ao
+                                    carrinho!
+                                </p>
+                            </EmptyCartMesage>
+                        )}
                     </ProductsHolder>
                     <Total>
                         <strong>TOTAL:</strong>

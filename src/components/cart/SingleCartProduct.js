@@ -13,20 +13,30 @@ import {
 } from "./CartModalStyles";
 
 export default function SingleCartProduct(props) {
-    const { product, cartId } = props;
+    const { product, cartId, hasStock, getCart } = props;
     const { user } = useContext(UserContext);
-
     const [selectedQuantity, setSelecetedQuantity] = useState(product.quantity);
+    const [disabled, setDisabled] = useState(hasStock);
 
     function removeOne() {
         if (selectedQuantity > 1) {
             updateCartProduct(selectedQuantity - 1);
+            if (disabled) {
+                setDisabled(false);
+            }
         } else {
             deleteCartProduct();
         }
     }
+
     function addOne() {
+        if (disabled) {
+            return;
+        }
         updateCartProduct(selectedQuantity + 1);
+        if (selectedQuantity + 1 >= product.stock) {
+            setDisabled(true);
+        }
     }
 
     function deleteCartProduct() {
@@ -42,10 +52,7 @@ export default function SingleCartProduct(props) {
         );
 
         request.then((response) => {
-            //função de get cart de novo
-            //ou filter da coleção de cart original tirando esse
-            // o que torna necessario passar o cartProducts e setCartProduct como props pra esse componente
-            //o segundo método pode dar probelma na renderização sem state da quantidade de um produto no carrinho
+            getCart();
         });
 
         request.catch((error) => {
@@ -92,9 +99,7 @@ export default function SingleCartProduct(props) {
                 <QuantityHolder>
                     <RemoveButonn onClick={removeOne} />
                     <p>{selectedQuantity}</p>
-                    <AddButonn onClick={addOne} />{" "}
-                    {/*setar como disabled quando
-                    atingir a qtd máxima, fazer do botãoio mudar*/}
+                    <AddButonn onClick={addOne} disabled={disabled} />
                 </QuantityHolder>
             </ProductInfoHolder>
             <Price>

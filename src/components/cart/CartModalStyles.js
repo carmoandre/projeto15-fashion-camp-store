@@ -60,6 +60,19 @@ const ProductsHolder = styled.div`
     }
 `;
 
+const EmptyCartMesage = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 20px;
+
+    & > p {
+        padding: 0 25%;
+        color: #b4b4ba;
+    }
+`;
+
 const GeneralHolder = styled.div`
     display: flex;
     align-items: center;
@@ -109,7 +122,7 @@ const QuantityHolder = styled.div`
 
 const AddButonn = styled(MdAddBox)`
     border-radius: 5px;
-    color: #185adb;
+    color: ${(props) => (props.disabled ? `#dad7d7` : `#185adb`)};
     width: 20px;
     height: 20px;
     margin-left: 6px;
@@ -188,6 +201,7 @@ export {
     StyledModal,
     ModalTitle,
     ProductsHolder,
+    EmptyCartMesage,
     GeneralHolder,
     CloseIcon,
     ProductInfoHolder,
