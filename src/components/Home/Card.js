@@ -11,6 +11,9 @@ export default function Card({card, setCartEmpty, setCartSize, cartSize}){
     const history = useHistory();
     
     function addToCart(){
+        if(card.quantity <= 0 || card.quantity === "0"){
+            return;
+        }
         if(!user){
             return history.push("/sign-in");
         }
@@ -26,7 +29,8 @@ export default function Card({card, setCartEmpty, setCartSize, cartSize}){
 
     return(
         <>
-        <CardStyle>
+        <CardStyle qntd={card.quantity}>
+            {card.quantity <= 0 || card.quantity === "0" ? <div className="out-of-stock"><p>Produto sem estoque</p></div> : <></> }
             <div className="img-container">
                 <img src={card.image} alt="roupa"/>
             </div>
@@ -49,6 +53,17 @@ const CardStyle = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    .out-of-stock{
+        position:absolute;
+        background:#EFEFEF;
+        opacity:100%;
+        width:auto;
+        height:auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .img-container{
         border-radius: 8px 8px 0px 0px;
         width: 250px;
@@ -60,6 +75,7 @@ const CardStyle = styled.div`
             border-radius: 8px 8px 0px 0px;
             width:100%;
             height: 100%;
+            opacity: ${props => props.qntd <= 0 || props.qntd === "0" ? "60%" : "100%"};
         }
     }
     .info{
