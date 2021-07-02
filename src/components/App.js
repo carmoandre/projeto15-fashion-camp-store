@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import Login from "./Login";
+import Home from "./Home/Home";
 import Register from "./Register";
 
 export default function App() {
@@ -15,7 +16,12 @@ export default function App() {
                 <GlobalStyle />
                 <Switch>
                     <Route path="/sign-in" exact component={Login} />
+                </Switch>
+                <Switch>
                     <Route path="/sign-up" exact component={Register} />
+                </Switch>
+                <Switch>
+                    <Route path="/" exact component={Home} />
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>

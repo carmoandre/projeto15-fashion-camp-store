@@ -9,6 +9,9 @@ const GenericButton = styled.button`
     font-weight: 700;
     border: none;
     border-radius: 5px;
+    &:hover{
+        font-size: 21px;
+    }
 `;
 
 export { GenericButton };
