@@ -7,7 +7,6 @@ import UserContext from "../contexts/UserContext";
 import { GenericInput } from "./reusable/GenericInput";
 import { GenericButton } from "./reusable/GenericButton";
 import { Logo } from "./reusable/Logo";
-import CartModal from "./cart/CartModal";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -82,9 +81,6 @@ export default function Login() {
                     <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
                 </Link>
             </FlexEffect>
-            <CartModal />{" "}
-            {/*CartModal deve estar na pagina principal o state 
-            e a função toggleModal também, e devem ser passadas por props pra cartModal */}
         </>
     );
 }
@@ -113,7 +109,7 @@ const Suggestion = styled.p`
     font-size: 15px;
     line-height: 18px;
     margin-top: 36px;
-    &:hover{
+    &:hover {
         font-size: 16px;
     }
 `;
