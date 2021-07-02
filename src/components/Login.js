@@ -7,6 +7,7 @@ import UserContext from "../contexts/UserContext";
 import { GenericInput } from "./reusable/GenericInput";
 import { GenericButton } from "./reusable/GenericButton";
 import { Logo } from "./reusable/Logo";
+import CartModal from "./cart/CartModal";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ export default function Login() {
     useEffect(() => {
         if (localStorageUser) {
             setUser(JSON.parse(localStorageUser));
-            //history.push("/");
+            history.push("/");
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -53,33 +54,38 @@ export default function Login() {
     }
 
     return (
-        <FlexEffect>
-            <Logo>Fashion Camp</Logo>
-            <Form onSubmit={logUser}>
-                <GenericInput
-                    type="email"
-                    placeholder="E-mail"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={disabled}
-                />
-                <GenericInput
-                    type="password"
-                    placeholder="Senha"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={disabled}
-                />
-                <GenericButton type="submit" disabled={disabled}>
-                    {disabled ? loadEffect : `Entrar`}
-                </GenericButton>
-            </Form>
-            <Link to="/sign-up">
-                <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
-            </Link>
-        </FlexEffect>
+        <>
+            <FlexEffect>
+                <Logo>Fashion Camp</Logo>
+                <Form onSubmit={logUser}>
+                    <GenericInput
+                        type="email"
+                        placeholder="E-mail"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={disabled}
+                    />
+                    <GenericInput
+                        type="password"
+                        placeholder="Senha"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        disabled={disabled}
+                    />
+                    <GenericButton type="submit" disabled={disabled}>
+                        {disabled ? loadEffect : `Entrar`}
+                    </GenericButton>
+                </Form>
+                <Link to="/sign-up">
+                    <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
+                </Link>
+            </FlexEffect>
+            <CartModal />{" "}
+            {/*CartModal deve estar na pagina principal o state 
+            e a função toglleModal também, e devem ser passadas por props pra cartModal */}
+        </>
     );
 }
 
