@@ -24,7 +24,7 @@ export default function Login() {
     useEffect(() => {
         if (localStorageUser) {
             setUser(JSON.parse(localStorageUser));
-            //history.push("/");
+            history.push("/");
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -53,33 +53,35 @@ export default function Login() {
     }
 
     return (
-        <FlexEffect>
-            <Logo>Fashion Camp</Logo>
-            <Form onSubmit={logUser}>
-                <GenericInput
-                    type="email"
-                    placeholder="E-mail"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={disabled}
-                />
-                <GenericInput
-                    type="password"
-                    placeholder="Senha"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={disabled}
-                />
-                <GenericButton type="submit" disabled={disabled}>
-                    {disabled ? loadEffect : `Entrar`}
-                </GenericButton>
-            </Form>
-            <Link to="/sign-up">
-                <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
-            </Link>
-        </FlexEffect>
+        <>
+            <FlexEffect>
+                <Logo>Fashion Camp</Logo>
+                <Form onSubmit={logUser}>
+                    <GenericInput
+                        type="email"
+                        placeholder="E-mail"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={disabled}
+                    />
+                    <GenericInput
+                        type="password"
+                        placeholder="Senha"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        disabled={disabled}
+                    />
+                    <GenericButton type="submit" disabled={disabled}>
+                        {disabled ? loadEffect : `Entrar`}
+                    </GenericButton>
+                </Form>
+                <Link to="/sign-up">
+                    <Suggestion>Primeira vez? Cadastre-se!</Suggestion>
+                </Link>
+            </FlexEffect>
+        </>
     );
 }
 
@@ -107,7 +109,7 @@ const Suggestion = styled.p`
     font-size: 15px;
     line-height: 18px;
     margin-top: 36px;
-    &:hover{
+    &:hover {
         font-size: 16px;
     }
 `;

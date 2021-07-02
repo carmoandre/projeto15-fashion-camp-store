@@ -6,55 +6,91 @@ import { useEffect, useState, useContext } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import styled from "styled-components";
 import axios from "axios";
+import CartModal from "../cart/CartModal";
+import { useHistory } from "react-router-dom";
 
-export default function Home(){
-    
-    const {user} = useContext(UserContext);
+export default function Home() {
+    const { user } = useContext(UserContext);
     const [data, setData] = useState([]);
-    const [cartEmpty, setCartEmpty] = useState(user?true:true) //mudar isso e checar no ato do login se há carrinho ativo
+    const [cartEmpty, setCartEmpty] = useState(true);
+    const [modalIsOpen, setModalIsOPen] = useState(false);
+    const history = useHistory();
 
-    useEffect(()=>{
+    useEffect(() => {
         const promisse = axios.get(`http://localhost:4000/products`);
-        promisse.then((answer)=>{
-            console.log(answer.data);
-            setData(answer.data);
-        }).catch((answer)=>console.log(answer.response));
-    },[])
+        promisse
+            .then((answer) => {
+                console.log(answer.data);
+                setData(answer.data);
+            })
+            .catch((answer) => console.log(answer.response));
+    }, []);
 
-    function getAllProducts(){
+    function getAllProducts() {
         const promisse = axios.get(`http://localhost:4000/products`);
-        promisse.then((answer)=>{
-            console.log(answer.data);
-            setData(answer.data);
-        }).catch((answer)=>console.log(answer.response));
+        promisse
+            .then((answer) => {
+                console.log(answer.data);
+                setData(answer.data);
+            })
+            .catch((answer) => console.log(answer.response));
     }
 
-    return(
-        <HomePage>
-            <Navbar cartEmpty={cartEmpty} setData={setData}/>
-            <Sidebar/>
-            <Content>
-                { data.length ? 
-                    data?.map((card, i)=>{
-                        console.log(card);
-                        return(<Card key={i} card={card} setCartEmpty={setCartEmpty}/>)
-                    }) 
-                    
-                    : <div className="centralize"><p className="not-found">Nenhum Produto foi Encotrado</p><IoMdArrowRoundBack onClick={getAllProducts} class="back-icon"/></div>
-                }
-            </Content>
-        </HomePage>
-    )
+    function toggleModal() {
+        if (!user) {
+            history.push("/sign-in");
+            return;
+        }
+        modalIsOpen ? setModalIsOPen(false) : setModalIsOPen(true);
+    }
+
+    return (
+        <>
+            <HomePage>
+                <Navbar
+                    cartEmpty={cartEmpty}
+                    setData={setData}
+                    toggleModal={toggleModal}
+                />
+                <Sidebar />
+                <Content>
+                    {data.length ? (
+                        data?.map((card, i) => {
+                            console.log(card);
+                            return (
+                                <Card
+                                    key={i}
+                                    card={card}
+                                    setCartEmpty={setCartEmpty}
+                                />
+                            );
+                        })
+                    ) : (
+                        <div className="centralize">
+                            <p className="not-found">
+                                Nenhum Produto foi Encotrado
+                            </p>
+                            <IoMdArrowRoundBack
+                                onClick={getAllProducts}
+                                className="back-icon"
+                            />
+                        </div>
+                    )}
+                </Content>
+            </HomePage>
+            <CartModal toggleModal={toggleModal} modalIsOpen={modalIsOpen} />
+        </>
+    );
 }
 
 const HomePage = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    width:100vw;
+    width: 100vw;
     height: 100vh;
     padding-bottom: 15px;
-`
+`;
 const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -63,36 +99,36 @@ const Content = styled.div`
     row-gap: 50px;
     width: 90%;
     height: 100%;
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
         display: none;
     }
-    .centralize{
-        width:100%;
+    .centralize {
+        width: 100%;
         display: flex;
         justify-content: center;
         position: relative;
-        .not-found{
+        .not-found {
             align-self: center;
-            color:#FFC947;
+            color: #ffc947;
             padding-bottom: 150px;
             font-size: 18px;
-            &:hover{
+            &:hover {
                 transition: 1000ms;
                 padding-bottom: 151px;
                 font-size: 19px;
             }
         }
-        .back-icon{
+        .back-icon {
             font-size: 28px;
-            color:#FFC947;
+            color: #ffc947;
             position: absolute;
-            bottom:40vh;
+            bottom: 40vh;
             cursor: pointer;
-            &:hover{
+            &:hover {
                 transition: 1000ms;
                 font-size: 48px;
-                bottom:39vh;
+                bottom: 39vh;
             }
         }
     }
-`
+`;
